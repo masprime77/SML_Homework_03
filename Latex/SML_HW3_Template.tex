@@ -34,8 +34,10 @@
 \usepackage{caption}
 \captionsetup{justification=centering}
 \usepackage{tcolorbox}
-
-
+\usepackage{fontspec}
+\setmainfont{Aptos}
+\usepackage{float}
+\usepackage{hyperref}
 
 \let\file\texttt
 \let\code\texttt
@@ -43,10 +45,8 @@
 \let\cls\textsf
 \let\tbs\textbackslash
 
-
 \newlist{checkboxes}{itemize}{1}
 \setlist[checkboxes]{label=$\square$, leftmargin=*}
-
 
 \newtcolorbox{programmingtaskbox}{
   colback=blue!5!white,
@@ -56,7 +56,6 @@
   boxrule=0.8pt,
   leftrule=1mm
 }
-
 
 \ConfigureHeadline{
 	headline={title}
@@ -81,117 +80,204 @@
 \textbf{TEMPLATE:} \href{https://colab.research.google.com/drive/1QM37OJ0yJhGyHJhlzW8UGxJ266q4foF7?usp=sharing}{https://colab.research.google.com/drive/1QM37OJ0yJhGyHJhlzW8UGxJ266q4foF7?usp=sharing}
 
 \begin{task}[points=34]{Regression}
-\begin{programmingtaskbox}
-Complete the corresponding section of the notebook as part of this task.
-\end{programmingtaskbox}
-In this exercise, you will implement various kinds of linear regressors using the data \texttt{lin\_reg\_train.txt} and \texttt{lin\_reg\_test.txt}.
-The files contain noisy observations from an unknown function $f: \mathbb{R} \mapsto \mathbb{R}$.
-In both files, the first column represents the input and the second column represents the output.
-You can load the data using \texttt{numpy.loadtxt} and built-in functions for computing the mean.
+    \begin{programmingtaskbox}
+        Complete the corresponding section of the notebook as part of this task.
+    \end{programmingtaskbox}
 
-For all subtasks, assume that the data is identically and independently distributed according to
-\begin{equation*}
-    y_i = \bm{\Phi}(\mathbf{x_i})^\top \mathbf{w} + \epsilon_i,
-\end{equation*}
-where
-\begin{equation*}
-\epsilon_i \sim \mathcal{N}(0, \sigma^2),
-\end{equation*}
-    and $\Phi: \mathbb{R} \rightarrow \mathbb{R}^n$ is a feature transformation
-such that
-\begin{equation*}
-    \mathbf{y} \sim \mathcal{N}(\bm{\Phi}(\mathbf{X})^\top \mathbf{w}, \sigma^2 \mathbf{I}).
-\end{equation*}
+    In this exercise, you will implement various kinds of linear regressors using the data \texttt{lin\_reg\_train.txt} and \texttt{lin\_reg\_test.txt}.
+    The files contain noisy observations from an unknown function $f: \mathbb{R} \mapsto \mathbb{R}$.
+    In both files, the first column represents the input and the second column represents the output.
+    You can load the data using \texttt{numpy.loadtxt} and built-in functions for computing the mean.
 
-Additionally, make sure that your implementations support multivariate inputs. The feature transformations
+    For all subtasks, assume that the data is identically and independently distributed according to
+    \begin{equation*}
+        y_i = \bm{\Phi}(\mathbf{x_i})^\top \mathbf{w} + \epsilon_i,
+    \end{equation*}
+    where
+    \begin{equation*}
+        \epsilon_i \sim \mathcal{N}(0, \sigma^2),
+    \end{equation*}
+    and $\Phi: \mathbb{R} \rightarrow \mathbb{R}^n$ is a feature transformation such that
+    \begin{equation*}
+        \mathbf{y} \sim \mathcal{N}(\bm{\Phi}(\mathbf{X})^\top \mathbf{w}, \sigma^2 \mathbf{I}).
+    \end{equation*}
+
+    Additionally, make sure that your implementations support multivariate inputs. The feature transformations
     are given in each task; if no basis function is stated explicitly, use the data as is, i.e.~$\bm{\Phi}(x) = x$.
 
-\begin{subtask}[points=8, title=Linear Features]
-Implement linear ridge regression using linear features, i.e.~the data itself by filling in the ToDos of the corresponding task in the provided Colab Template.
-Include an additional input dimension to represent a bias term and use the ridge coefficient $\lambda = 0.01$.
-\\
-\begin{enumerate}
-\item Explain: What is the ridge coefficient and why do we use it? 
-\item Derive the optimal model parameters by minimizing the squared error loss function. 
-\item Report the root mean squared error of the train and test data under your linear model with linear features. 
-\item Include the resulting plot and a short description. 
-\end{enumerate}
+    \begin{subtask}[points=8, title=Linear Features]
+        Implement linear ridge regression using linear features, i.e.~the data itself by filling in the ToDos of the corresponding task in the provided Colab Template.
+        Include an additional input dimension to represent a bias term and use the ridge coefficient $\lambda = 0.01$.
+        
+        \begin{enumerate}
+            \item Explain: What is the ridge coefficient and why do we use it? 
+            \item Derive the optimal model parameters by minimizing the squared error loss function. 
+            \item Report the root mean squared error of the train and test data under your linear model with linear features. 
+            \item Include the resulting plot and a short description. 
+        \end{enumerate}
 
-\begin{solution}
+        \begin{solution}
+            \textbf{1. Explain: What is the ridge coefficient and why do we use it?}
 
-\end{solution}
+            In the lecture (Slide 42), the regularized least squares problem is introduced as the Maximum A-Posteriori (MAP) estimate in a Bayesian linear regression setting.
+            The coefficient function is:
 
-\end{subtask}
+            \[
+            w = \arg\min_w \frac{1}{2} \|\Phi^\top w - y\|^2 + \frac{\lambda}{2} \|w\|^2
+            \]
 
-\begin{subtask}[points=8, title=Polynomial Features]
-Implement linear ridge regression using a polynomial feature projection by filling in the ToDos of the corresponding task in the provided Colab Template.
-Include an additional input dimension to represent a bias term and use the ridge coefficient $\lambda = 0.01$.
+            % Here, $\lambda = \sigma^2 / \sigma_0^2$ arises naturally from the ratio of observation noise variance $\sigma^2$ to prior variance $\sigma_0^2$ on the weights $w$.
 
-For polynomials of degrees 2, 3 and 4:
-\begin{enumerate}
-\item Report the root mean squared error of the training data and of the testing data under your model with polynomial features.
-\item Include the resulting plot and a short description.
-\item Why do we call this method \textit{linear} regression despite using polynomials?
-\end{enumerate}
+            The term $\frac{\lambda}{2} \|w\|^2$ penalizes large weights and therefore controls the complexity of the model.
+            A smaller $\lambda$ allows the model to fit the training data more closely, while a larger $\lambda$ forces the weights to remain small, reducing overfitting.
 
-\begin{solution}
+            This form of regularization is also known as Ridge Regression, as described on Slides 41–42. It improves numerical stability, especially when the feature matrix has high collinearity or low rank.
 
-\end{solution}
-\end{subtask}
+            The objective is to avoid unstable "valleys".
+            The ones that appear when using \textit{Least squares}, as seen in the figure \ref{Task1a_1}.
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.5\textwidth]{images/Task1a_1.png}
+                \caption{Example. The difference when using Ridge vs. Least squares}
+                \label{Task1a_1}
+            \end{figure}
+            
+            \vspace{2em}
+
+            \textbf{2. Derive the optimal model parameters by minimizing the squared error loss function.}
+
+            As shown in Slide 42 of the lecture, we minimize the regularized least squares loss:
+
+            \[
+            L(w) = \frac{1}{2} \|\Phi^\top w - y\|^2 + \frac{\lambda}{2} \|w\|^2
+            \]
+
+            Taking the derivative with respect to $w$ and setting it to zero:
+
+            \[
+            \frac{\partial L}{\partial w} = \Phi(\Phi^\top w - y) + \lambda w = 0
+            \]
+
+            Rearranging:
+
+            \[
+            \Phi \Phi^\top w + \lambda w = \Phi y
+            \]
+
+            Solving for $w$:
+
+            \[
+            w = (\Phi \Phi^\top + \lambda I)^{-1} \Phi y
+            \]
+
+            This is the closed-form solution for regularized linear regression (ridge regression).
+
+            \vspace{2em}
+
+            \textbf{3. Report the root mean squared error of the train and test data under your linear model with linear features.}
+
+            The result of the RMSE of the train adn test data for the linear model and features is the following:
+
+            \begin{verbatim}
+Linear Features
+  Train RMSE: 0.4121780156736108
+  Test  RMSE: 0.38428816992597875
+            \end{verbatim}
+
+            The RMSE values are relatively low and close to each other, indicating that the model generalizes well to unseen data and does not overfit.
+            This is expected for a simple linear model with mild regularization on a smooth dataset.
+
+            \vspace{2em}
+
+            \textbf{4. Include the resulting plot and a short description.}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.5\textwidth]{images/Task1a_4.png}
+                \caption{Linear ridge regression fit with $\lambda = 0.01$ using linear features and bias.
+                % Black dots represent the data points. The blue line is the fitted regression model.
+                }
+            \end{figure}
+
+            The model fits a straight line through the data. Since the data shows a clear nonlinear pattern, the linear model cannot capture it well.
+            Still, the fit shows a general trend and does not overfit the noise, which explains the relatively low RMSE values.
+
+        \end{solution}
+
+    \end{subtask}
+
+    \begin{subtask}[points=8, title=Polynomial Features]
+        Implement linear ridge regression using a polynomial feature projection by filling in the ToDos of the corresponding task in the provided Colab Template.
+        Include an additional input dimension to represent a bias term and use the ridge coefficient $\lambda = 0.01$.
+
+        For polynomials of degrees 2, 3 and 4:
+
+        \begin{enumerate}
+            \item Report the root mean squared error of the training data and of the testing data under your model with polynomial features.
+            \item Include the resulting plot and a short description.
+            \item Why do we call this method \textit{linear} regression despite using polynomials?
+        \end{enumerate}
+
+        \begin{solution}
+
+        \end{solution}
+    \end{subtask}
 
 
-\begin{subtask}[points=10, title=Bayesian Linear Regression]
-Implement Bayesian linear ridge regression by filling in the ToDos of the corresponding task in the provided Colab Template. Assuming that $\mathbf{w}$ follows a multivariate Gaussian distribution, such that
-\begin{equation*}
-\mathbf{w} \sim \mathcal{N}(\bm{\mu}_0, \bm{\Lambda}_0^{-1}),
-\end{equation*}
-where ridge regression dictates $\bm{\mu}_0 = \mathbf{0}$ and $\bm{\Lambda}_0 = \lambda \mathbf{I}$.
+    \begin{subtask}[points=10, title=Bayesian Linear Regression]
+        Implement Bayesian linear ridge regression by filling in the ToDos of the corresponding task in the provided Colab Template. Assuming that $\mathbf{w}$ follows a multivariate Gaussian distribution, such that
+        
+        \begin{equation*}
+            \mathbf{w} \sim \mathcal{N}(\bm{\mu}_0, \bm{\Lambda}_0^{-1}),
+        \end{equation*}
 
-Here, $\bm{\mu}_0$ is the prior weight mean and $\bm{\Lambda}_0$ is the prior weight precision matrix, i.e.~the inverse of the covariance matrix.
-The corresponding posterior parameters can be denoted as $\bm{\mu}_n$ and $\bm{\Lambda}_n$.
+        where ridge regression dictates $\bm{\mu}_0 = \mathbf{0}$ and $\bm{\Lambda}_0 = \lambda \mathbf{I}$.
 
-Assume $\sigma = 0.1$, use $\lambda = 0.01$, and
-include an additional input dimension to represent a bias term.
-Use all of the provided training data for a single Bayesian update.
+        Here, $\bm{\mu}_0$ is the prior weight mean and $\bm{\Lambda}_0$ is the prior weight precision matrix, i.e.~the inverse of the covariance matrix.
+        The corresponding posterior parameters can be denoted as $\bm{\mu}_n$ and $\bm{\Lambda}_n$.
 
-\begin{enumerate}
-\item State the posterior distribution of the model parameters $p(\mathbf{w} \mid \mathbf{X}, \mathbf{y})$ (no derivation required). 
-\item State the predictive distribution $p(\mathbf{y}_* \mid \mathbf{X}_*, \mathbf{X}, \mathbf{y})$ (no derivation required). 
-\item Report the RMSE of the train and test data under your Bayesian model (use the predictive mean). 
-\item Report the average log-likelihood of the train and test data under your Bayesian model.
-\item Include the resulting plot and a short description. 
-\item Explain the differences between linear regression and Bayesian linear regression.
-\end{enumerate}
+        Assume $\sigma = 0.1$, use $\lambda = 0.01$, and
+        include an additional input dimension to represent a bias term.
+        Use all of the provided training data for a single Bayesian update.
 
-\begin{solution}
+        \begin{enumerate}
+            \item State the posterior distribution of the model parameters $p(\mathbf{w} \mid \mathbf{X}, \mathbf{y})$ (no derivation required). 
+            \item State the predictive distribution $p(\mathbf{y}_* \mid \mathbf{X}_*, \mathbf{X}, \mathbf{y})$ (no derivation required). 
+            \item Report the RMSE of the train and test data under your Bayesian model (use the predictive mean). 
+            \item Report the average log-likelihood of the train and test data under your Bayesian model.
+            \item Include the resulting plot and a short description. 
+            \item Explain the differences between linear regression and Bayesian linear regression.
+        \end{enumerate}
 
-\end{solution}
-\end{subtask}
+        \begin{solution}
 
- \newpage
-\begin{subtask}[points=8, title=Squared Exponential Features]
-Implement Bayesian linear ridge regression using squared exponential (SE) features by filling in the ToDos of the corresponding task in the provided Colab Template.
-In other words, replace your observed data matrix $\mathbf{X} \in \mathbb{R}^{n \times 1}$ by a feature matrix $\bm{\Phi} \in \mathbb{R}^{n \times k}$,
-where
-\begin{equation*}
-\bm{\Phi}_{ij} = \exp \left( -\frac{1}{2} \beta (\mathbf{X}_i - \alpha_j)^2 \right).
-\end{equation*}
-Set $k = 20$, $\alpha_j = j * 0.1 - 1$ and $\beta = 10$. Use the ridge coefficient $\lambda = 0.01$ and assume known Gaussian noise with $\sigma = 0.1$.
-Include an additional input dimension to represent a bias term.
+        \end{solution}
+    \end{subtask}
 
-\begin{enumerate}
-\item Report the RMSE of the train and test data under your Bayesian model with SE features. 
-\item Report the average log-likelihood of the train and test data under your Bayesian model with SE features. 
-\item Include the resulting plot and a short description. 
-\item How can SE features be interpreted from a statisticians point of view? What are $\alpha$ and $\beta$ in that context? 
-\end{enumerate}
+    \begin{subtask}[points=8, title=Squared Exponential Features]
+        Implement Bayesian linear ridge regression using squared exponential (SE) features by filling in the ToDos of the corresponding task in the provided Colab Template.
+        In other words, replace your observed data matrix $\mathbf{X} \in \mathbb{R}^{n \times 1}$ by a feature matrix $\bm{\Phi} \in \mathbb{R}^{n \times k}$, where
 
-\begin{solution}
+        \begin{equation*}
+            \bm{\Phi}_{ij} = \exp \left( -\frac{1}{2} \beta (\mathbf{X}_i - \alpha_j)^2 \right).
+        \end{equation*}
 
-\end{solution}
-\end{subtask}
+        Set $k = 20$, $\alpha_j = j * 0.1 - 1$ and $\beta = 10$. Use the ridge coefficient $\lambda = 0.01$ and assume known Gaussian noise with $\sigma = 0.1$.
+        Include an additional input dimension to represent a bias term.
+
+        \begin{enumerate}
+            \item Report the RMSE of the train and test data under your Bayesian model with SE features. 
+            \item Report the average log-likelihood of the train and test data under your Bayesian model with SE features. 
+            \item Include the resulting plot and a short description. 
+            \item How can SE features be interpreted from a statisticians point of view? What are $\alpha$ and $\beta$ in that context? 
+        \end{enumerate}
+
+        \begin{solution}
+
+        \end{solution}
+    \end{subtask}
 \end{task}
-
 
 \newpage
 
@@ -235,6 +321,7 @@ Notes:
 \end{subtask}
 \end{task}
 
+\newpage
 
 \begin{task}[points=28]{Principal Component Analysis}
 \begin{programmingtaskbox}
@@ -311,6 +398,7 @@ This question asks you to deepen this topic by conducting some research by yours
 \end{subtask}
 \end{task}
 
+\newpage
 
 \begin{task}[points=8]{Kernel Construction}
 Let \( X \) be a non-empty set. A \textbf{kernel} is a symmetric function \( k : X \times X \rightarrow \mathbb{R} \). The set \( X \) can have arbitrary structure (e.g., real vector space, graphs, images, strings, etc.). 
@@ -337,4 +425,5 @@ Let \( k_1, k_2 : X \times X \rightarrow \mathbb{R} \) be two positive definite 
 
 
 \end{task}
+
 \end{document}
