@@ -179,11 +179,15 @@
 
             The result of the RMSE of the train adn test data for the linear model and features is the following:
 
-            \begin{verbatim}
-Linear Features
-  Train RMSE: 0.4121780156736108
-  Test  RMSE: 0.38428816992597875
-            \end{verbatim}
+            \vspace{1em}
+
+            \textbf{\texttt{Linear Features}}
+            \begin{itemize}
+                \item \texttt{Train RMSE: 0.4121780156736108}
+                \item \texttt{Test RMSE: 0.38428816992597875}
+            \end{itemize}
+
+            \vspace{1em}
 
             The RMSE values are relatively low and close to each other, indicating that the model generalizes well to unseen data and does not overfit.
             This is expected for a simple linear model with mild regularization on a smooth dataset.
@@ -220,10 +224,63 @@ Linear Features
         \end{enumerate}
 
         \begin{solution}
+            \textbf{1. Report the root mean squared error of the training data and of the testing data under your model with polynomial features.}
 
+            We trained ridge regression models using polynomial features of degrees 2, 3, and 4, with a regularization parameter $\lambda = 0.01$ and a bias term.
+            These are the results:
+
+            \begin{itemize}
+                \item \textbf{Degree 2:}
+                \begin{itemize}
+                    \item \texttt{Train RMSE: 0.2120}
+                    \item \texttt{Test RMSE: 0.2169}
+                \end{itemize}
+                \item \textbf{Degree 3:}
+                \begin{itemize}
+                    \item \texttt{Train RMSE: 0.0871}
+                    \item \texttt{Test RMSE: 0.1084}
+                \end{itemize}
+                \item \textbf{Degree 4:}
+                \begin{itemize}
+                    \item \texttt{Train RMSE: 0.0870}
+                    \item \texttt{Test RMSE: 0.1067}
+                \end{itemize}
+            \end{itemize}
+
+            with a higher degree of the polynomial features, the model's ability to fit the data.
+            This, represented by the lower RMSE values.
+            The model with degree 3 achieves a good balance between training and test error, while the degree 4 model slightly improves the test performance without overfitting.
+
+            \vspace{2em}
+
+            \textbf{2. Include the resulting plot and a short description.}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.32\textwidth]{images/Task1b_2_1.png}
+                \includegraphics[width=0.32\textwidth]{images/Task1b_2_2.png}
+                \includegraphics[width=0.32\textwidth]{images/Task1b_2_3.png}
+                \caption{Polynomial ridge regression fits with degrees 2 (left), 3 (center), and 4 (right).}
+            \end{figure}
+
+            The degree 2 model captures the general U-shape trend but misses the fine details on the ends.
+            The degree 3 model fits the data much more accurately.
+            The degree 4 model performs similarly to degree 3, with no relevant visual differences.
+            The improvement from degree 2 to 3 is significant, while the gain from degree 3 to 4 is minor.
+
+            \vspace{2em}
+
+            \textbf{3. Why do we call this method \textit{linear} regression despite using polynomials?}
+
+            Even though we use polynomial functions of the input, the model is still linear in the parameters $w$.
+            The prediction is a weighted sum of the features, and we do not multiply or compose the parameters.
+            That’s why it's still called linear regression.
+
+            \[
+            f(x) = w^\top \phi(x) = w_0 + w_1 x + w_2 x^2 + \dots + w_d x^d
+            \]
         \end{solution}
     \end{subtask}
-
 
     \begin{subtask}[points=10, title=Bayesian Linear Regression]
         Implement Bayesian linear ridge regression by filling in the ToDos of the corresponding task in the provided Colab Template. Assuming that $\mathbf{w}$ follows a multivariate Gaussian distribution, such that
