@@ -308,7 +308,93 @@
         \end{enumerate}
 
         \begin{solution}
+            \textbf{1. State the posterior distribution of the model parameters $\bm{p(w | X, y)}$ (no derivation required).}
 
+            We assume that the outputs are generated from a linear model with Gaussian noise:
+            
+            \[
+            y_i = \phi(x_i)^\top w + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
+            \]
+
+            We place a Gaussian prior on the weight vector:
+
+            \[
+            w \sim \mathcal{N}(0, \lambda^{-1} I)
+            \]
+
+            Given the likelihood
+            
+            \[
+            p(y \mid X, w) = \mathcal{N}(y \mid \Phi w, \sigma^2 I)
+            \]
+            
+            and the prior, we compute the posterior using Bayes' rule:
+            
+            \[
+            p(w \mid X, y) \propto p(y \mid X, w)\, p(w)
+            \]
+
+            Because both the likelihood and prior are Gaussian, the posterior is also Gaussian:
+            
+            \[
+            p(w \mid X, y) = \mathcal{N}(w \mid \mu, \Lambda^{-1})
+            \]
+
+            with:
+            
+            \[
+            \Lambda = \lambda I + \frac{1}{\sigma^2} \Phi^\top \Phi, \quad
+            \mu = \frac{1}{\sigma^2} \Lambda^{-1} \Phi^\top y
+            \]
+
+            This expression balances our prior belief (through $\lambda$) and the data evidence (through $\Phi^\top \Phi$), and matches the derivation shown in Lecture 5, Slides 38–42.
+
+            \vspace{2em}
+
+            \textbf{2. State the predictive distribution $\bm{p(y_* | X_*, X, y)}$ (no derivation required).}
+
+            For a new input $x^*$, the output $y^*$ is also Gaussian-distributed, even after marginalizing over the uncertainty in $w$:
+            
+            \[
+            p(y^* \mid x^*, X, y) = \int p(y^* \mid x^*, w)\, p(w \mid X, y)\, dw
+            \]
+
+            Both terms are Gaussian, so the result is Gaussian as well:
+            
+            \[
+            p(y^* \mid x^*, X, y) = \mathcal{N}(y^* \mid \mu^\top \phi(x^*),\ \sigma^2 + \phi(x^*)^\top \Lambda^{-1} \phi(x^*))
+            \]
+
+            The mean of the predictive distribution is:
+            
+            \[
+            \mathbb{E}[y^*] = \mu^\top \phi(x^*)
+            \]
+
+            and the variance includes both the observation noise and the model uncertainty:
+            
+            \[
+            \text{Var}(y^*) = \sigma^2 + \phi(x^*)^\top \Lambda^{-1} \phi(x^*)
+            \]
+
+            This means the model gives not only a prediction but also measure the confidence in that prediction.
+            The further $x^*$ is from the training data, or the less data we have, the greater the uncertainty (variance). This predictive formulation is explained conceptually in Lecture 5, Slides 49–50.
+            
+            \vspace{2em}
+
+            \textbf{3. Report the RMSE of the train and test data under your Bayesian model (use the predictive mean).}
+
+            \vspace{2em}
+
+            \textbf{4. Report the average log-likelihood of the train and test data under your Bayesian model.}
+
+            \vspace{2em}
+
+            \textbf{5. Include the resulting plot and a short description.}
+
+            \vspace{2em}
+
+            \textbf{6. Explain the differences between linear regression and Bayesian linear regression.}
         \end{solution}
     \end{subtask}
 
