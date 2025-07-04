@@ -128,10 +128,8 @@
 
             % Here, $\lambda = \sigma^2 / \sigma_0^2$ arises naturally from the ratio of observation noise variance $\sigma^2$ to prior variance $\sigma_0^2$ on the weights $w$.
 
-            The term $\frac{\lambda}{2} \|w\|^2$ penalizes large weights and therefore controls the complexity of the model.
-            A smaller $\lambda$ allows the model to fit the training data more closely, while a larger $\lambda$ forces the weights to remain small, reducing overfitting.
-
-            This form of regularization is also known as Ridge Regression, as described on Slides 41–42. It improves numerical stability, especially when the feature matrix has high collinearity or low rank.
+            The term $\lambda$ controls the complexity of the model and determines the degree of overfitting.
+            A smaller $\lambda$ allows the model to fit the training data more precisely, while a larger $\lambda$ reduces the overfitting.
 
             The objective is to avoid unstable "valleys".
             The ones that appear when using \textit{Least squares}, as seen in the figure \ref{Task1a_1}.
@@ -177,14 +175,14 @@
 
             \textbf{3. Report the root mean squared error of the train and test data under your linear model with linear features.}
 
-            The result of the RMSE of the train adn test data for the linear model and features is the following:
+            The result of the RMSE of the train and test data for the linear model and features is the following:
 
             \vspace{1em}
 
             \textbf{\texttt{Linear Features}}
             \begin{itemize}
-                \item \texttt{Train RMSE: 0.4121780156736108}
-                \item \texttt{Test RMSE: 0.38428816992597875}
+                \item \texttt{Train RMSE: 0.4122}
+                \item \texttt{Test RMSE: 0.3843}
             \end{itemize}
 
             \vspace{1em}
@@ -310,12 +308,6 @@
         \begin{solution}
             \textbf{1. State the posterior distribution of the model parameters $\bm{p(w | X, y)}$ (no derivation required).}
 
-            We assume that the outputs are generated from a linear model with Gaussian noise:
-            
-            \[
-            y_i = \phi(x_i)^\top w + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
-            \]
-
             We place a Gaussian prior on the weight vector:
 
             \[
@@ -340,61 +332,102 @@
             p(w \mid X, y) = \mathcal{N}(w \mid \mu, \Lambda^{-1})
             \]
 
-            with:
-            
-            \[
-            \Lambda = \lambda I + \frac{1}{\sigma^2} \Phi^\top \Phi, \quad
-            \mu = \frac{1}{\sigma^2} \Lambda^{-1} \Phi^\top y
-            \]
+            where the parameters are:
 
-            This expression balances our prior belief (through $\lambda$) and the data evidence (through $\Phi^\top \Phi$), and matches the derivation shown in Lecture 5, Slides 38–42.
+            \[
+            \Lambda = \lambda I + \frac{1}{\sigma^2} \Phi^\top \Phi,
+            \qquad
+            \mu = \frac{1}{\sigma^2} \Lambda^{-1} \Phi^\top \mathbf{y}
+            \]
 
             \vspace{2em}
 
             \textbf{2. State the predictive distribution $\bm{p(y_* | X_*, X, y)}$ (no derivation required).}
 
-            For a new input $x^*$, the output $y^*$ is also Gaussian-distributed, even after marginalizing over the uncertainty in $w$:
+            For a new input $x_*$, the output $y_*$ is also Gaussian-distributed, even after marginalizing over the uncertainty in $w$:
             
             \[
-            p(y^* \mid x^*, X, y) = \int p(y^* \mid x^*, w)\, p(w \mid X, y)\, dw
+            p(y_* \mid x_*, X, y) = \int p(y_* \mid x_*, w)\, p(w \mid X, y)\, dw
             \]
 
             Both terms are Gaussian, so the result is Gaussian as well:
             
             \[
-            p(y^* \mid x^*, X, y) = \mathcal{N}(y^* \mid \mu^\top \phi(x^*),\ \sigma^2 + \phi(x^*)^\top \Lambda^{-1} \phi(x^*))
+            p(y_* \mid x_*, X, y) = \mathcal{N}(y_* \mid \mu^\top \phi(x_*),\ \sigma^2 + \phi(x_*)^\top \Lambda^{-1} \phi(x_*))
             \]
 
-            The mean of the predictive distribution is:
+            The mean and variance of the predictive distribution is:
             
             \[
             \mathbb{E}[y^*] = \mu^\top \phi(x^*)
-            \]
-
-            and the variance includes both the observation noise and the model uncertainty:
-            
-            \[
+            \qquad
             \text{Var}(y^*) = \sigma^2 + \phi(x^*)^\top \Lambda^{-1} \phi(x^*)
             \]
 
-            This means the model gives not only a prediction but also measure the confidence in that prediction.
-            The further $x^*$ is from the training data, or the less data we have, the greater the uncertainty (variance). This predictive formulation is explained conceptually in Lecture 5, Slides 49–50.
-            
             \vspace{2em}
 
             \textbf{3. Report the RMSE of the train and test data under your Bayesian model (use the predictive mean).}
+
+            The result of the RMSE of the train and test data for the Bayesian Linear Regression is:
+
+            \vspace{1em}
+
+            \textbf{\texttt{Bayesian Linear Regression}}
+            \begin{itemize}
+                \item \texttt{Train RMSE: 0.4122}
+                \item \texttt{Test RMSE: 0.3843}
+            \end{itemize}
+
+            \vspace{1em}
+
+            These RMSE values are the same as those obtained from the linear ridge regression model, since the predictive mean of the Bayesian model corresponds exactly to the ridge solution in this case.
+            This confirms the theoretical equivalence between MAP estimation and Bayesian inference using Gaussian priors and likelihoods.
 
             \vspace{2em}
 
             \textbf{4. Report the average log-likelihood of the train and test data under your Bayesian model.}
 
+            \begin{itemize}
+                \item \texttt{Average Train Log-LLH: -27568.08}
+                \item \texttt{Average Test Log-LLH: -25265.41}
+            \end{itemize}
+
+            \vspace{1em}
+
+            These values indicate the model's overall likelihood fit.
+            While the absolute values are negative due to the log of probabilities, closer values between train and test indicate reasonable generalization.
+
             \vspace{2em}
 
             \textbf{5. Include the resulting plot and a short description.}
 
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.5\textwidth]{images/Task1c_5.png}
+                \caption{Bayesian linear regression fit with predictive mean and linear features.}
+            \end{figure}
+
+            The model fits a straight line with the predictive mean.
+            Since the underlying function is nonlinear, the model underfits, but still captures a global trend.
+
             \vspace{2em}
 
             \textbf{6. Explain the differences between linear regression and Bayesian linear regression.}
+        
+            The key difference between these two regressions lies in how the model treats the weights:
+
+            \begin{itemize}
+                \item \textbf{Linear regression} finds a single point estimate for the weight vector $w$ by minimizing the squared loss (possibly with regularization).
+                \item \textbf{Bayesian linear regression} treats $w$ as a random variable and infers a posterior distribution over it using Bayes' rule.
+            \end{itemize}
+
+            As a result:
+            \begin{itemize}
+                \item Linear regression produces a single prediction.
+                \item Bayesian linear regression provides both a mean prediction and uncertainty (variance) around it.
+            \end{itemize}
+
+            Treating Bayesian as a probability allows models to quantify confidence in their predictions and to update beliefs as new data is observed.
         \end{solution}
     \end{subtask}
 
