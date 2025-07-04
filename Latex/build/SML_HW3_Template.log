@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.25)  4 JUL 2025 16:44
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.25)  4 JUL 2025 19:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2370,15 +2370,18 @@ File: images/Task1b_2_3.png Graphic file (type bmp)
  [4] [5]
 File: images/Task1c_5.png Graphic file (type bmp)
 <images/Task1c_5.png>
- [6] [7] [8]
+ [6] [7]
+File: images/Task1d_3.png Graphic file (type bmp)
+<images/Task1d_3.png>
+ [8] [9]
 File: gp_test_example.png Graphic file (type bmp)
 <gp_test_example.png>
- [9] [10]
-Overfull \hbox (15.14575pt too wide) in paragraph at lines 535--536
+ [10] [11]
+Overfull \hbox (15.14575pt too wide) in paragraph at lines 592--593
 []\TU/Aptos(0)/m/n/10 Using as many components as needed to explain $\OT1/cmr/m/n/10 95[]$ \TU/Aptos(0)/m/n/10 of the dataset variance, generate a scatter plot of the lower-dimensional
  []
 
-[11] [12] [13] (build/SML_HW3_Template.aux)
+[12] [13] [14] (build/SML_HW3_Template.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -2387,12 +2390,12 @@ Package rerunfilecheck Info: File `SML_HW3_Template.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 50023 strings out of 474773
- 1215307 string characters out of 5757723
+ 50032 strings out of 474773
+ 1215519 string characters out of 5757723
  1943839 words of memory out of 5000000
- 71259 multiletter control sequences out of 15000+600000
+ 71267 multiletter control sequences out of 15000+600000
  570806 words of font info for 187 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  122i,21n,145p,11026b,1031s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on build/SML_HW3_Template.pdf (13 pages).
+Output written on build/SML_HW3_Template.pdf (14 pages).

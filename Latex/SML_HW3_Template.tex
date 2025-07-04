@@ -451,6 +451,61 @@
 
         \begin{solution}
 
+            \textbf{1. Report the RMSE of the train and test data under your Bayesian model with SE features.}
+
+            \begin{itemize}
+                \item \texttt{Train RMSE: 0.0816}
+                \item \texttt{Test RMSE: 0.1434}
+            \end{itemize}
+
+            The RMSE values indicate a very accurate fit to the training data, and a adequate generalization performance on the test data.
+            The improvement over the linear and polynomial features suggests that the SE features capture the local structure of the function well.
+
+            \vspace{2em}
+
+            \textbf{2. Report the average log-likelihood of the train and test data under your Bayesian model with SE features.}
+
+            \begin{itemize}
+                \item \texttt{Average Train Log-LLH: -244.12}
+                \item \texttt{Average Test Log-LLH: -225.88}
+            \end{itemize}
+
+            These values indicate a high likelihood fit on both training and testing data, significantly better than the linear model.
+            The SE features allow the model to express nonlinear patterns, leading to improved log-likelihood scores and better uncertainty estimates.
+
+            \vspace{2em}
+
+            \textbf{3. Include the resulting plot and a short description.}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.5\textwidth]{images/Task1d_3.png}
+                \caption{Bayesian regression with squared exponential features ($k=20$, $\beta=10$).}
+            \end{figure}
+
+            The blue curve represents the predictive mean, while the shaded area indicates the uncertainty.
+            The fit is smooth and accurate across the entire input space, capturing both the global trend and local variations.
+
+            \vspace{2em}
+
+            \textbf{4. How can SE features be interpreted from a statisticians point of view? What are α and β in that context?}
+
+            From a statistician’s perspective, they serve as a form of kernel feature transformation, mapping scalar inputs into a higher-dimensional feature space where each dimension captures similarity to a fixed center.
+
+            Each feature is of the form:
+
+            \[
+            \phi_j(x) = \exp\left(-\frac{1}{2} \beta (x - \alpha_j)^2\right)
+            \]
+
+            Here:
+            \begin{itemize}
+                \item $\alpha_j$ defines the center of the $j$-th Gaussian basis function.
+                \item $\beta$ controls the width of the basis function; it is the inverse of the variance and determines how local or global the feature response is.
+            \end{itemize}
+
+            By combining multiple SE features, the model can approximate complex nonlinear functions while maintaining interpretability and smoothness.
+
         \end{solution}
     \end{subtask}
 \end{task}
@@ -458,43 +513,45 @@
 \newpage
 
 \begin{task}[points=12]{Gaussian Processes}
-\begin{programmingtaskbox}
-Complete the corresponding section of the notebook as part of this task.
-\end{programmingtaskbox}
-\begin{subtask}[title=GP Regression, points= 10]
-Implement a Gaussian Process to fit the target function $y = \sin(x) + \cos^2(x)$ with $x \in [0, 0.005, 0.01, 0.015, \ldots, 2\pi]$. First, complete the function \texttt{rbf\_kernel()}.
+    \begin{programmingtaskbox}
+        Complete the corresponding section of the notebook as part of this task.
+    \end{programmingtaskbox}
 
-Use the RBF/Gaussian kernel with a kernel bandwidth of 1, an initial mean of 0 and assume a noise variance of 0.005. Begin with no target data points and, at each iteration, sample a new point from the target function according to the uncertainty of your GP (that is, sample the point where the uncertainty is the highest) and update it. 
+    \begin{subtask}[title=GP Regression, points= 10]
+        Implement a Gaussian Process to fit the target function $y = \sin(x) + \cos^2(x)$ with $x \in [0, 0.005, 0.01, 0.015, \ldots, 2\pi]$. First, complete the function \texttt{rbf\_kernel()}.
 
-Plot your GP (mean and two times the standard deviation) after iterations 1, 2, 5, 10 and 15.
-In each figure, plot also the true function as ground truth and add a new marker for each new sampled point. We have provided an example of the plot at iteration 4.
+        Use the RBF/Gaussian kernel with a kernel bandwidth of 1, an initial mean of 0 and assume a noise variance of 0.005. Begin with no target data points and, at each iteration, sample a new point from the target function according to the uncertainty of your GP (that is, sample the point where the uncertainty is the highest) and update it. 
 
-\textbf{Include the plots in your PDF submission.}
+        Plot your GP (mean and two times the standard deviation) after iterations 1, 2, 5, 10 and 15.
+        In each figure, plot also the true function as ground truth and add a new marker for each new sampled point. We have provided an example of the plot at iteration 4.
 
+        \textbf{Include the plots in your PDF submission.}
 
-\begin{center}
-    \includegraphics[scale=0.5]{gp_test_example.png}
-\end{center}
+        \begin{center}
+            \includegraphics[scale=0.5]{gp_test_example.png}
+        \end{center}
 
-Notes:
-\begin{itemize}
-    \item The iteration number is equal to the number of sampled points, e.g. at iteration 5 there are 5 points sampled.
-    \item You do not need to strictly follow the given example plot, e.g., using different marker shapes or colors is okay.
-    \item The pyplot function \texttt{fill\_between()} might be useful to you.
-    \item For the RBF kernel, we use the definition on Slide 47, Lecture 6, where the vertical amplitude is set to 1.
-    \item If multiple points have the highest uncertainty, select the one with the lowest index in the dataset.
-\end{itemize}
-\begin{solution}
+        Notes:
+        \begin{itemize}
+            \item The iteration number is equal to the number of sampled points, e.g. at iteration 5 there are 5 points sampled.
+            \item You do not need to strictly follow the given example plot, e.g., using different marker shapes or colors is okay.
+            \item The pyplot function \texttt{fill\_between()} might be useful to you.
+            \item For the RBF kernel, we use the definition on Slide 47, Lecture 6, where the vertical amplitude is set to 1.
+            \item If multiple points have the highest uncertainty, select the one with the lowest index in the dataset.
+        \end{itemize}
 
-\end{solution}
-\begin{subtask}[title=Kernel Parameters, points=2]
-    Explore various kernel hyperparameters, i.e., \texttt{rbf\_sigma} in the code, and explain how this parameter affects the prediction results.
-\end{subtask}
+        \begin{solution}
 
-\begin{solution}
+        \end{solution}
+    \end{subtask}
 
-\end{solution}
-\end{subtask}
+    \begin{subtask}[title=Kernel Parameters, points=2]
+        Explore various kernel hyperparameters, i.e., \texttt{rbf\_sigma} in the code, and explain how this parameter affects the prediction results.
+        
+        \begin{solution}
+
+        \end{solution}
+    \end{subtask}
 \end{task}
 
 \newpage
