@@ -74,14 +74,13 @@
 \subtitle{Regression, Kernel Theory, Gaussian Processes, Latent Representation \\ Total Possible Points: 82}
 \maketitle
 
-\textcolor{red}{\textbf{Publication Date: June 12th, 21:00 PM}}\\
-\textcolor{red}{\textbf{Due Date: July 6th, 23:59 PM}}
-
-\textbf{TEMPLATE:} \href{https://colab.research.google.com/drive/1QM37OJ0yJhGyHJhlzW8UGxJ266q4foF7?usp=sharing}{https://colab.research.google.com/drive/1QM37OJ0yJhGyHJhlzW8UGxJ266q4foF7?usp=sharing}
+\boxed{\textbf{Group 210}}\\
+\textbf{Mateo Arenas}\\
+\textbf{Diusne Olavide}
 
 \begin{task}[points=34]{Regression}
     \begin{programmingtaskbox}
-        Complete the corresponding section of the notebook as part of this task.
+        Google Colab: \url{https://colab.research.google.com/drive/1kF9azPGS7ZNYaO0_rhi0_j-O6X-a27XU?usp=sharing}
     \end{programmingtaskbox}
 
     In this exercise, you will implement various kinds of linear regressors using the data \texttt{lin\_reg\_train.txt} and \texttt{lin\_reg\_test.txt}.
@@ -510,153 +509,153 @@
     \end{subtask}
 \end{task}
 
-\newpage
+% \newpage
 
-\begin{task}[points=12]{Gaussian Processes}
-    \begin{programmingtaskbox}
-        Complete the corresponding section of the notebook as part of this task.
-    \end{programmingtaskbox}
+% \begin{task}[points=12]{Gaussian Processes}
+%     \begin{programmingtaskbox}
+%         Google Collab:
+%     \end{programmingtaskbox}
 
-    \begin{subtask}[title=GP Regression, points= 10]
-        Implement a Gaussian Process to fit the target function $y = \sin(x) + \cos^2(x)$ with $x \in [0, 0.005, 0.01, 0.015, \ldots, 2\pi]$. First, complete the function \texttt{rbf\_kernel()}.
+%     \begin{subtask}[title=GP Regression, points= 10]
+%         Implement a Gaussian Process to fit the target function $y = \sin(x) + \cos^2(x)$ with $x \in [0, 0.005, 0.01, 0.015, \ldots, 2\pi]$. First, complete the function \texttt{rbf\_kernel()}.
 
-        Use the RBF/Gaussian kernel with a kernel bandwidth of 1, an initial mean of 0 and assume a noise variance of 0.005. Begin with no target data points and, at each iteration, sample a new point from the target function according to the uncertainty of your GP (that is, sample the point where the uncertainty is the highest) and update it. 
+%         Use the RBF/Gaussian kernel with a kernel bandwidth of 1, an initial mean of 0 and assume a noise variance of 0.005. Begin with no target data points and, at each iteration, sample a new point from the target function according to the uncertainty of your GP (that is, sample the point where the uncertainty is the highest) and update it. 
 
-        Plot your GP (mean and two times the standard deviation) after iterations 1, 2, 5, 10 and 15.
-        In each figure, plot also the true function as ground truth and add a new marker for each new sampled point. We have provided an example of the plot at iteration 4.
+%         Plot your GP (mean and two times the standard deviation) after iterations 1, 2, 5, 10 and 15.
+%         In each figure, plot also the true function as ground truth and add a new marker for each new sampled point. We have provided an example of the plot at iteration 4.
 
-        \textbf{Include the plots in your PDF submission.}
+%         \textbf{Include the plots in your PDF submission.}
 
-        \begin{center}
-            \includegraphics[scale=0.5]{gp_test_example.png}
-        \end{center}
+%         \begin{center}
+%             \includegraphics[scale=0.5]{gp_test_example.png}
+%         \end{center}
 
-        Notes:
-        \begin{itemize}
-            \item The iteration number is equal to the number of sampled points, e.g. at iteration 5 there are 5 points sampled.
-            \item You do not need to strictly follow the given example plot, e.g., using different marker shapes or colors is okay.
-            \item The pyplot function \texttt{fill\_between()} might be useful to you.
-            \item For the RBF kernel, we use the definition on Slide 47, Lecture 6, where the vertical amplitude is set to 1.
-            \item If multiple points have the highest uncertainty, select the one with the lowest index in the dataset.
-        \end{itemize}
+%         Notes:
+%         \begin{itemize}
+%             \item The iteration number is equal to the number of sampled points, e.g. at iteration 5 there are 5 points sampled.
+%             \item You do not need to strictly follow the given example plot, e.g., using different marker shapes or colors is okay.
+%             \item The pyplot function \texttt{fill\_between()} might be useful to you.
+%             \item For the RBF kernel, we use the definition on Slide 47, Lecture 6, where the vertical amplitude is set to 1.
+%             \item If multiple points have the highest uncertainty, select the one with the lowest index in the dataset.
+%         \end{itemize}
 
-        \begin{solution}
+%         \begin{solution}
 
-        \end{solution}
-    \end{subtask}
+%         \end{solution}
+%     \end{subtask}
 
-    \begin{subtask}[title=Kernel Parameters, points=2]
-        Explore various kernel hyperparameters, i.e., \texttt{rbf\_sigma} in the code, and explain how this parameter affects the prediction results.
+%     \begin{subtask}[title=Kernel Parameters, points=2]
+%         Explore various kernel hyperparameters, i.e., \texttt{rbf\_sigma} in the code, and explain how this parameter affects the prediction results.
         
-        \begin{solution}
+%         \begin{solution}
 
-        \end{solution}
-    \end{subtask}
-\end{task}
+%         \end{solution}
+%     \end{subtask}
+% \end{task}
 
-\newpage
+% \newpage
 
-\begin{task}[points=28]{Principal Component Analysis}
-\begin{programmingtaskbox}
-Complete the corresponding section of the notebook as part of this task.
-\end{programmingtaskbox}
-In this exercise, you will use the dataset \texttt{iris.txt}. It contains data from three kind of Iris flowers (`Setosa', `Versicolour' and `Virginica') with 4 attributes: sepal length, sepal width, petal length, and petal width. Each row contains a sample while the last attribute is the label ($0$ means that the sample comes from a `Setosa' plant, $1$ from a `Versicolour' and $2$ from `Virginica').
-(You are allowed to use built-in functions for computing the mean, the covariance, eigenvalues and eigenvectors.)
-
-
-
-\begin{subtask}[points=3, title=Data Normalization]
-Normalizing the data is a common practice in machine learning. Normalize the provided dataset such that it has zero mean and unit variance per dimension. Why is normalizing important?
-Fill in the ToDos of the corresponding task in the provided Colab Template.
-
-\begin{solution}
-
-\end{solution}
-
-\end{subtask}
+% \begin{task}[points=28]{Principal Component Analysis}
+% \begin{programmingtaskbox}
+% Complete the corresponding section of the notebook as part of this task.
+% \end{programmingtaskbox}
+% In this exercise, you will use the dataset \texttt{iris.txt}. It contains data from three kind of Iris flowers (`Setosa', `Versicolour' and `Virginica') with 4 attributes: sepal length, sepal width, petal length, and petal width. Each row contains a sample while the last attribute is the label ($0$ means that the sample comes from a `Setosa' plant, $1$ from a `Versicolour' and $2$ from `Virginica').
+% (You are allowed to use built-in functions for computing the mean, the covariance, eigenvalues and eigenvectors.)
 
 
 
-\begin{subtask}[points=8, title=Principal Component Analysis]
-Apply PCA on your normalized dataset and generate a plot showing the proportion (percentage) of the cumulative variance explained (you can use the function \texttt{numpy.cumsum}). 
-How many components do you need in order to explain at least $95\%$ of the dataset variance? 
-Fill in the ToDos of the corresponding task in the provided Colab Template.
-\begin{solution}
+% \begin{subtask}[points=3, title=Data Normalization]
+% Normalizing the data is a common practice in machine learning. Normalize the provided dataset such that it has zero mean and unit variance per dimension. Why is normalizing important?
+% Fill in the ToDos of the corresponding task in the provided Colab Template.
 
-\end{solution}
-\end{subtask}
+% \begin{solution}
 
+% \end{solution}
 
-
-\begin{subtask}[points=6, title=Low Dimensional Space]
-Using as many components as needed to explain $95\%$ of the dataset variance, generate a scatter plot of the lower-dimensional projection of the data. Use different colors or symbols for data points from different classes. Fill in the ToDos of the corresponding task in the provided Colab Template. What do you observe? 
-
-
-\begin{solution}
-
-\end{solution}
-
-\end{subtask}
+% \end{subtask}
 
 
 
-\begin{subtask}[points=6, title=Projection to the Original Space]
-Reconstruct the original dataset by using different number of principal components. Using the normalized root mean square error (NRMSE) as a metric, fill the table below (error per input versus the amount of principal components used). Fill in the ToDos of the corresponding task in the provided Colab Template.
+% \begin{subtask}[points=8, title=Principal Component Analysis]
+% Apply PCA on your normalized dataset and generate a plot showing the proportion (percentage) of the cumulative variance explained (you can use the function \texttt{numpy.cumsum}). 
+% How many components do you need in order to explain at least $95\%$ of the dataset variance? 
+% Fill in the ToDos of the corresponding task in the provided Colab Template.
+% \begin{solution}
 
-\begin{tabular}{c|r|r|r|r}
-N. of components & $x_1$ & $x_2$ & $x_3$ & $x_4$ \\
-\hline
-1 & & & & \\
-2 & & & & \\
-3 & & & & \\
-4 & & & &
-\end{tabular}
-
-Remember that in the first step you normalized the data.
-
-\begin{solution}
-
-\end{solution}
-\end{subtask}
-
-\newpage
-
-\begin{subtask}[points=5, title=Kernel PCA]
-Throughout this class we have seen that PCA is an easy and efficient way to reduce the dimensionality of some data. However, it is able to detect only linear dependences among data points. A more sophisticated extension to PCA, \emph{Kernel PCA}, is able to overcome this limitation. 
-This question asks you to deepen this topic by conducting some research by yourself: explain what Kernel PCA is, how it works and what are its main limitations. Be as concise (but clear) as possible.
-
-\begin{solution}
-
-\end{solution}
-\end{subtask}
-\end{task}
-
-\newpage
-
-\begin{task}[points=8]{Kernel Construction}
-Let \( X \) be a non-empty set. A \textbf{kernel} is a symmetric function \( k : X \times X \rightarrow \mathbb{R} \). The set \( X \) can have arbitrary structure (e.g., real vector space, graphs, images, strings, etc.). 
-
-A kernel \( k \) is called \textbf{positive definite} if for all finite subsets \( \{x_i\}_{i=1}^n \subseteq X \), the corresponding kernel matrix \( K \in \mathbb{R}^{n \times n} \) with entries \( K_{ij} = k(x_i, x_j) \) is positive semi-definite (check Lecture 6 slide 9), i.e.,
-
-\[
-\forall \alpha \in \mathbb{R}^n,\quad \alpha^\top K \alpha \geq 0.
-\]
-
-Let \( k_1, k_2 : X \times X \rightarrow \mathbb{R} \) be two positive definite kernels. We are to prove that the following operations yield valid positive definite kernels:
-
-\begin{enumerate}
-    \item \( k(x, x') = k_1(x, x') + k_2(x, x') \) 
-    \item \( k(x, x') = c \cdot k_1(x, x') \), for \( c \geq 0 \) 
-    \item \( k(x, x') = k_1(x, x') \cdot k_2(x, x') \) 
-    \item \( k(x, x') = k_1(f(x), f(x')) \) for some function \( f : X \rightarrow X \) 
-\end{enumerate}
+% \end{solution}
+% \end{subtask}
 
 
-\begin{solution}
 
-\end{solution}
+% \begin{subtask}[points=6, title=Low Dimensional Space]
+% Using as many components as needed to explain $95\%$ of the dataset variance, generate a scatter plot of the lower-dimensional projection of the data. Use different colors or symbols for data points from different classes. Fill in the ToDos of the corresponding task in the provided Colab Template. What do you observe? 
 
 
-\end{task}
+% \begin{solution}
+
+% \end{solution}
+
+% \end{subtask}
+
+
+
+% \begin{subtask}[points=6, title=Projection to the Original Space]
+% Reconstruct the original dataset by using different number of principal components. Using the normalized root mean square error (NRMSE) as a metric, fill the table below (error per input versus the amount of principal components used). Fill in the ToDos of the corresponding task in the provided Colab Template.
+
+% \begin{tabular}{c|r|r|r|r}
+% N. of components & $x_1$ & $x_2$ & $x_3$ & $x_4$ \\
+% \hline
+% 1 & & & & \\
+% 2 & & & & \\
+% 3 & & & & \\
+% 4 & & & &
+% \end{tabular}
+
+% Remember that in the first step you normalized the data.
+
+% \begin{solution}
+
+% \end{solution}
+% \end{subtask}
+
+% \newpage
+
+% \begin{subtask}[points=5, title=Kernel PCA]
+% Throughout this class we have seen that PCA is an easy and efficient way to reduce the dimensionality of some data. However, it is able to detect only linear dependences among data points. A more sophisticated extension to PCA, \emph{Kernel PCA}, is able to overcome this limitation. 
+% This question asks you to deepen this topic by conducting some research by yourself: explain what Kernel PCA is, how it works and what are its main limitations. Be as concise (but clear) as possible.
+
+% \begin{solution}
+
+% \end{solution}
+% \end{subtask}
+% \end{task}
+
+% \newpage
+
+% \begin{task}[points=8]{Kernel Construction}
+% Let \( X \) be a non-empty set. A \textbf{kernel} is a symmetric function \( k : X \times X \rightarrow \mathbb{R} \). The set \( X \) can have arbitrary structure (e.g., real vector space, graphs, images, strings, etc.). 
+
+% A kernel \( k \) is called \textbf{positive definite} if for all finite subsets \( \{x_i\}_{i=1}^n \subseteq X \), the corresponding kernel matrix \( K \in \mathbb{R}^{n \times n} \) with entries \( K_{ij} = k(x_i, x_j) \) is positive semi-definite (check Lecture 6 slide 9), i.e.,
+
+% \[
+% \forall \alpha \in \mathbb{R}^n,\quad \alpha^\top K \alpha \geq 0.
+% \]
+
+% Let \( k_1, k_2 : X \times X \rightarrow \mathbb{R} \) be two positive definite kernels. We are to prove that the following operations yield valid positive definite kernels:
+
+% \begin{enumerate}
+%     \item \( k(x, x') = k_1(x, x') + k_2(x, x') \) 
+%     \item \( k(x, x') = c \cdot k_1(x, x') \), for \( c \geq 0 \) 
+%     \item \( k(x, x') = k_1(x, x') \cdot k_2(x, x') \) 
+%     \item \( k(x, x') = k_1(f(x), f(x')) \) for some function \( f : X \rightarrow X \) 
+% \end{enumerate}
+
+
+% \begin{solution}
+
+% \end{solution}
+
+
+% \end{task}
 
 \end{document}
